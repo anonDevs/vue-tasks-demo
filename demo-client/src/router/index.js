@@ -8,7 +8,14 @@ import store from '@/store';
 const routes = [
   {
     path: '/',
-    component: () => import('@/views/Login.vue')
+    component: () => import('@/views/Login.vue'),
+    beforeEnter(to, from, next) {
+      if (store.state.token) {
+        next('/app');
+      }
+
+      next();
+    }
   },
   {
     path: '/app',
@@ -19,6 +26,13 @@ const routes = [
       } else {
         next();
       }
+    }
+  },
+  {
+    path: '/logout',
+    beforeEnter(to, from, next) {
+      store.commit('LOGOUT');
+      next('/');
     }
   }
 ];

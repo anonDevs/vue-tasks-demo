@@ -5,11 +5,16 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    token: ''
+    token: '' || localStorage.getItem('accessToken')
   },
   mutations: {
     SET_TOKEN: (state, token) => {
       state.token = token;
+      localStorage.setItem('accessToken', token);
+    },
+    LOGOUT: (state) => {
+      state.token = '',
+        localStorage.removeItem('accessToken');
     }
   },
   actions: {
